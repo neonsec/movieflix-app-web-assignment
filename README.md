@@ -3,15 +3,7 @@ Movieflix - Go to place to find trending movies
 
 This is a monorepo comprising of both React Native, React and Typescript using [TurboBuild](https://turbo.build/)
 
-## Using this example
 
-Run the following command:
-
-```sh
-npx create-turbo@latest -e with-react-native-web
-```
-
-## What's inside?
 
 This Turborepo includes the following packages/apps:
 
@@ -22,7 +14,6 @@ This Turborepo includes the following packages/apps:
 - `@repo/ui`: a stub [react-native](https://reactnative.dev/) component library shared by both `web` and `native` applications
 - `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
-Each package/app is 100% [TypeScript](https://www.typescriptlang.org/).
 
 ### Utilities
 

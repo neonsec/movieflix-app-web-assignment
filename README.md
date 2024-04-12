@@ -1,6 +1,7 @@
-# Turborepo react-native starter
+Movieflix - Go to place to find trending movies
 
-This is an official starter Turborepo.
+
+This is a monorepo comprising of both React Native, React and Typescript using [TurboBuild](https://turbo.build/)
 
 ## Using this example
 

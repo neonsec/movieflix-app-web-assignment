@@ -11,7 +11,11 @@ const en = {
     readyForLaunch: "Your app, almost ready for launch!",
     exciting: "(ohh, this is exciting!)",
     letsGo: "Let's go!",
-    exploreMovies: 'Explore Movies'
+    exploreMovies: 'Explore Movies',
+    onboardingTitle: 'Explore Popular Movies',
+    onboardingSubtitle: "Browse through trending and popular movies to see what everyone's talking about.",
+    onboardingTitle2: "Personalized Recommendations",
+    onboardingSubtitle2: "Tell us what you like, and we'll tailor recommendations just for you."
   },
   errorScreen: {
     title: "Something went wrong!",

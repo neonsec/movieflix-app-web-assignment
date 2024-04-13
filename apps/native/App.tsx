@@ -7,6 +7,11 @@ import Config from "./config"
 import { useInitialRootStore } from "./models";
 import { AppNavigator } from "./navigators";
 import "./i18n"
+import * as SplashScreen from 'expo-splash-screen';
+
+
+// Keep the splash screen visible while we fetch resources
+SplashScreen.preventAutoHideAsync();
 
 export default function Native() {
 

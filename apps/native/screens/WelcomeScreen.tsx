@@ -24,15 +24,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
     navigation.navigate("Demo", { screen: "DemoShowroom", params: {} })
   }
 
-  // useHeader(
-  //   {
-  //     rightTx: "common.logOut",
-  //     onRightPress: logout,
-  //   },
-  //   [logout],
-  // )
 
-  // const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
 
   return (
     <View style={$container}>
@@ -41,7 +33,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
         <Text
           testID="welcome-heading"
           style={$welcomeHeading}
-          tx="welcomeScreen.readyForLaunch"
+          tx="welcomeScreen.exploreMovies"
           preset="heading"
         />
         <Text tx="welcomeScreen.exciting" preset="subheading" />

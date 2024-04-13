@@ -22,7 +22,9 @@ export default function Native() {
     // Slightly delaying splash screen hiding for better UX; can be customized or removed as needed,
     // Note: (vanilla Android) The splash-screen will not appear if you launch your app via the terminal or Android Studio. Kill the app and launch it normally by tapping on the launcher icon. https://stackoverflow.com/a/69831106
     // Note: (vanilla iOS) You might notice the splash-screen logo change size. This happens in debug/development mode. Try building the app for release.
-    // setTimeout(hideSplashScreen, 500)
+    setTimeout(SplashScreen.hideAsync, 500)
+    //  SplashScreen.hideAsync();
+
   })
   console.log("rehydrated", rehydrated)
   if (!rehydrated ) return null

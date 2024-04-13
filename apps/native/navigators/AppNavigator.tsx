@@ -17,7 +17,7 @@ import { useColorScheme, Text } from "react-native"
 import * as Screens from "../screens"
 import Config from "../config"
 import { useStores } from "../models"
-// import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
+import { DemoNavigator, DemoTabParamList } from "./DemoNavigator"
 import { navigationRef, useBackButtonHandler } from "./navigationUtilities"
 import { colors } from "../theme"
 // import { Text } from "../components"
@@ -78,6 +78,7 @@ const AppStack = observer(function AppStack() {
         <>
           {/* <Stack.Screen name="Login" component={Screens.LoginScreen} /> */}
           <Stack.Screen name="Welcome" component={Screens.WelcomeScreen} />
+          <Stack.Screen name="Demo" component={DemoNavigator} />
         </>
       )}
 

@@ -1,5 +1,5 @@
 import { Instance, SnapshotOut, types } from "mobx-state-tree"
-// import { api } from "../services/api"
+import { api } from "@repo/api"
 import { Episode, EpisodeModel } from "./Episode"
 import { withSetPropAction } from "./helpers/withSetPropAction"
 
@@ -13,8 +13,8 @@ export const EpisodeStoreModel = types
   .actions(withSetPropAction)
   .actions((store) => ({
     async fetchEpisodes() {
-      // const response = await api.getEpisodes()
-      const response = { kind: "ok", episodes: []}
+      const response = await api.getEpisodes()
+      // const response = { kind: "ok", episodes: []}
       if (response.kind === "ok") {
         store.setProp("episodes", response.episodes)
       } else {

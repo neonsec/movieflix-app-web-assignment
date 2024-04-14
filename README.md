@@ -73,6 +73,7 @@ cd apps/web && npm run dev
 ```
 
 #### File Structure of Apps folder: 
+```
 📦apps
  ┣ 📂native =>>>>>>>>>>> includes code of for native apps android + ios using expo
  ┃ ┣ 📂assets =>>>>>>>>>>> assets includes images, icons for the application
@@ -134,14 +135,14 @@ cd apps/web && npm run dev
  ┃ ┣ 📜package.json
  ┃ ┗ 📜tsconfig.json
 
+```
 
-
-
+```
  📦packages
  ┣ api =>>>>>>>>>>> shared api SDK for both native and web
  ┣ ui =>>>>>>>>>>> shared ui components for both native and web
  ┣ typescript-config =>>>>>>>>>>> shared typescript config
-
+```
 
 Screenshots of the applications
 ![Onboarding](./docs/images/Screenshot%202024-04-14%20at%209.14.19 AM.png "Onboarding")

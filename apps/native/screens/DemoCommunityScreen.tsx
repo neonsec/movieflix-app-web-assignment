@@ -65,12 +65,12 @@ export const DemoCommunityScreen: FC<DemoTabScreenProps<"DemoCommunity">> = obse
         await moviesStore.getMovies({ q:  searchPhrase ? searchPhrase : 'a' })
         setIsLoading(false)
       })()
-    }, [moviesStore, searchPhrase])
+    }, [moviesStore, searchPhrase, clicked])
 
     // simulate a longer refresh, if the refresh is too fast for UX
     async function manualRefresh() {
       setRefreshing(true)
-      await Promise.all([moviesStore.getMovies({ q: 'a' }), delay(750)])
+      await Promise.all([moviesStore.getMovies({ q: searchPhrase ? searchPhrase : 'a' }), delay(750)])
       setRefreshing(false)
     }
 

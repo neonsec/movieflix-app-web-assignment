@@ -141,3 +141,20 @@ cd apps/web && npm run dev
  ┣ api =>>>>>>>>>>> shared api SDK for both native and web
  ┣ ui =>>>>>>>>>>> shared ui components for both native and web
  ┣ typescript-config =>>>>>>>>>>> shared typescript config
+
+
+Screenshots of the applications
+![Onboarding](./docs/images/Screenshot%202024-04-14%20at%209.14.19 AM.png "Onboarding")
+![Onboarding](./docs/images/Screenshot%202024-04-14%20at%209.15.04 AM.png "Onboarding")
+![Onboarding](./docs/images/Screenshot%202024-04-14%20at%209.15.14 AM.png "Onboarding")
+![Search Screen](./docs/images/Screenshot%202024-04-14%20at%209.18.27 AM.png "Search Screen")
+![Web with SDK](./docs/images/Screenshot%202024-04-14%20at%209.42.47 AM.png "Integrating web with SDK")
+
+
+
+
+ #### To Do
+  1. Movie details screen
+  2. Clean up of boilerplate codes
+  3. Renaming the screens
+  4. Export the build

@@ -41,6 +41,7 @@ const config = {
       path: "",
     },
     Welcome: "welcome",
+    Home: "home",
     Demo: {
       screens: {
         DemoShowroom: {

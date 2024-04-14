@@ -33,7 +33,6 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
       <View style={$topContainer}>
         <Swiper style={$wrapper} showsButtons={false} activeDotColor={colors.palette.neutral100} dotColor={colors.palette.neutral500} autoplay>
           <View style={$slide1}>
-
             <Image style={$welcomeLogo} source={welcomeLogo} resizeMode="contain" />
             <Text
               size='md'

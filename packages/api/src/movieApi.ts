@@ -7,14 +7,14 @@
  */
 import { ApiResponse, ApisauceInstance, create } from "apisauce"
 import { GeneralApiProblem, getGeneralApiProblem } from "./apiProblem"
-import type { ApiConfig, ApiFeedResponse } from "./api.types"
+import type { ApiConfig, MovieFeedResponse } from "./api.types"
 
 
 /**
  * Configuring the apisauce instance.
  */
-export const DEFAULT_API_CONFIG: ApiConfig = {
-  url: 'https://api.rss2json.com/v1/',
+export const DEFAULT_MOVIE_CONFIG: ApiConfig = {
+  url: 'https://search.imdbot.workers.dev',
   timeout: 10000,
 }
 
@@ -22,14 +22,14 @@ export const DEFAULT_API_CONFIG: ApiConfig = {
  * Manages all requests to the API. You can use this class to build out
  * various requests that you need to call from your backend API.
  */
-export class Api {
+export class MovieApi {
   apisauce: ApisauceInstance
   config: ApiConfig
 
   /**
    * Set up our API instance. Keep this lightweight!
    */
-  constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
+  constructor(config: ApiConfig = DEFAULT_MOVIE_CONFIG) {
     this.config = config
     this.apisauce = create({
       baseURL: this.config.url,
@@ -43,10 +43,10 @@ export class Api {
   /**
    * Gets a list of recent React Native Radio episodes.
    */
-  async getEpisodes(): Promise<{ kind: "ok"; episodes: any[] } | GeneralApiProblem> {
+  async getMovies(q: string): Promise<{ kind: "ok"; movies: any[] } | GeneralApiProblem> {
     // make the api call
-    const response: ApiResponse<ApiFeedResponse> = await this.apisauce.get(
-      `api.json?rss_url=https%3A%2F%2Ffeeds.simplecast.com%2FhEI_f9Dx`,
+    const response: ApiResponse<MovieFeedResponse> = await this.apisauce.get(
+      `?q=${q}`,
     )
 
     // the typical ways to die when calling an api
@@ -60,12 +60,20 @@ export class Api {
       const rawData = response.data
 
       // This is where we transform the data into the shape we expect for our MST model.
-      const episodes: any[] =
-        rawData?.items.map((raw) => ({
-          ...raw,
+      const movies: any[] =
+        rawData?.description.map((raw) => ({
+          title: raw?.['#TITLE'],
+          year: raw?.['#YEAR'], 
+          imdbId: raw?.["#IMDB_ID"],
+          rank: raw?.["#RANK"],
+          actors: raw?.["#ACTORS"],
+          aka: raw?.["#AKA"],
+          imdbUrl: raw?.["#IMDB_URL"],
+          imdbIv: raw?.["#IMDB_ID"],
+          imgPoster: raw?.["#IMG_POSTER"],
         })) ?? []
 
-      return { kind: "ok", episodes }
+      return { kind: "ok", movies }
     } catch (e) {
       if (__DEV__ && e instanceof Error) {
         console.error(`Bad data: ${e.message}\n${response.data}`, e.stack)
@@ -80,4 +88,4 @@ export class Api {
 
 
 // Singleton instance of the API for convenience
-export const api = new Api()
+export const movieApi = new MovieApi()

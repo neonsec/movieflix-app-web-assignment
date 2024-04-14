@@ -10,6 +10,7 @@ import { colors, spacing } from "../../theme"
 import { useSafeAreaInsetsStyle } from "../../utils/useSafeAreaInsetsStyle"
 import * as Demos from "./demos"
 import { DrawerIconButton } from "./DrawerIconButton"
+import { useStores } from "../../models"
 
 const logo = require("../../assets/images/logo.png")
 
@@ -72,14 +73,28 @@ const NativeListItem: FC<DemoListItem> = ({ item, sectionIndex, handleScroll }) 
 
 const ShowroomListItem = Platform.select({ web: WebListItem, default: NativeListItem })
 
-export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
-  function DemoShowroomScreen(_props) {
+export const HomeScreen: FC<DemoTabScreenProps<"Home">> =
+  function HomeScreen(_props) {
     const [open, setOpen] = useState(false)
     const timeout = useRef<ReturnType<typeof setTimeout>>()
     const listRef = useRef<SectionList>(null)
     const menuRef = useRef<ListViewRef<DemoListItem["item"]>>(null)
-    const route = useRoute<RouteProp<DemoTabParamList, "DemoShowroom">>()
+    const route = useRoute<RouteProp<DemoTabParamList, "Home">>()
     const params = route.params
+    const { moviesStore } = useStores()
+
+
+    const [refreshing, setRefreshing] = React.useState(false)
+    const [isLoading, setIsLoading] = React.useState(false)
+
+      // initially, kick off a background refresh without the refreshing UI
+      useEffect(() => {
+        ;(async function load() {
+          setIsLoading(true)
+          await moviesStore.getMovies({ q: 'a'})
+          setIsLoading(false)
+        })()
+      }, [moviesStore])
 
     // handle Web links
     React.useEffect(() => {
@@ -173,9 +188,9 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
         )}
       >
         <Screen preset="fixed" safeAreaEdges={["top"]} contentContainerStyle={$screenContainer}>
-          <DrawerIconButton onPress={toggleDrawer} />
+          {/* <DrawerIconButton onPress={toggleDrawer} /> */}
 
-          <SectionList
+          {/* <SectionList
             ref={listRef}
             contentContainerStyle={$sectionListContentContainer}
             stickySectionHeadersEnabled={false}
@@ -198,7 +213,7 @@ export const DemoShowroomScreen: FC<DemoTabScreenProps<"DemoShowroom">> =
                 </View>
               )
             }}
-          />
+          /> */}
         </Screen>
       </Drawer>
     )

@@ -21,6 +21,27 @@ export interface EpisodeItem {
   categories: string[]
 }
 
+
+export interface MovieItem {
+  "#TITLE": string
+  "#YEAR": number
+  "#IMDB_ID": string
+  "#RANK": number
+  "#ACTORS": string
+  "#AKA": string
+  "#IMDB_URL": string
+  "#IMDB_IV": string
+  "#IMG_POSTER": string
+  "photo_width": number
+  "photo_height": number
+}
+
+export interface MovieFeedResponse {
+    ok: boolean
+    description: MovieItem[]
+    error_code: number
+}
+
 export interface ApiFeedResponse {
   status: string
   feed: {

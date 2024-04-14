@@ -21,12 +21,12 @@ export const customFontsToLoad = {
 const fonts = {
   spaceGrotesk: {
     // Cross-platform Google font.
-    thin: "sans-serif-thin",
-    light: "sans-serif-light",
-    normal: "sans-serif",
-    medium: "sans-serif-medium",
-    semiBold: "sans-serif-bold",
-    bold:  "sans-serif-bold",
+    thin: "HelveticaNeue-Thin",
+    light: "HelveticaNeue-Light",
+    normal: "Helvetica Neue",
+    medium: "HelveticaNeue-Medium",
+    semiBold: "HelveticaNeue-Medium",
+    bold:  "HelveticaNeue-Medium",
   },
   helveticaNeue: {
     // iOS only font.

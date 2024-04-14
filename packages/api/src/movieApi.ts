@@ -18,6 +18,8 @@ export const DEFAULT_MOVIE_CONFIG: ApiConfig = {
   timeout: 10000,
 }
 
+
+
 /**
  * Manages all requests to the API. You can use this class to build out
  * various requests that you need to call from your backend API.
@@ -40,6 +42,8 @@ export class MovieApi {
     })
   }
 
+  
+
   /**
    * Gets a list of recent React Native Radio episodes.
    */
@@ -58,10 +62,11 @@ export class MovieApi {
     // transform the data into the format we are expecting
     try {
       const rawData = response.data
-
+      console.log("raw", rawData)
       // This is where we transform the data into the shape we expect for our MST model.
       const movies: any[] =
         rawData?.description.map((raw) => ({
+          guid: (raw?.["#IMDB_ID"]),
           title: raw?.['#TITLE'],
           year: raw?.['#YEAR'], 
           imdbId: raw?.["#IMDB_ID"],

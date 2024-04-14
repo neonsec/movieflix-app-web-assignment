@@ -4,16 +4,19 @@ import { translate } from "../i18n"
 
 
 
+
 /**
  * This represents an episode of React Native Radio.
  */
 export const MovieModel = types
   .model("Movie")
   .props({
+    
+    guid:types.identifier,
     title: "",
-    year: "", 
+    year: types.number, 
     imdbId: "",
-    rank: "",
+    rank: types.number,
     actors: "",
     aka: "",
     imdbUrl: "",

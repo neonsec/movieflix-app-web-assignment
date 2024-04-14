@@ -37,6 +37,7 @@ import { Episode } from "../models/Episode"
 import { DemoTabScreenProps } from "../navigators/DemoNavigator"
 import { colors, spacing } from "../theme"
 import { delay } from "../utils/delay"
+import { Movie } from "../models/Movie"
 // import { openLinkInBrowser } from "../utils/openLinkInBrowser"
 
 const ICON_SIZE = 14
@@ -48,7 +49,7 @@ const rnrImages = [rnrImage1, rnrImage2, rnrImage3]
 
 export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = observer(
   function DemoPodcastListScreen(_props) {
-    const { episodeStore } = useStores()
+    const { moviesStore } = useStores()
 
     const [refreshing, setRefreshing] = React.useState(false)
     const [isLoading, setIsLoading] = React.useState(false)
@@ -57,15 +58,15 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
     useEffect(() => {
       ;(async function load() {
         setIsLoading(true)
-        await episodeStore.fetchEpisodes()
+        await moviesStore.getMovies({q: 'a'})
         setIsLoading(false)
       })()
-    }, [episodeStore])
+    }, [moviesStore])
 
     // simulate a longer refresh, if the refresh is too fast for UX
     async function manualRefresh() {
       setRefreshing(true)
-      await Promise.all([episodeStore.fetchEpisodes(), delay(750)])
+      await Promise.all([moviesStore.getMovies({q:'a'}), delay(750)])
       setRefreshing(false)
     }
 
@@ -75,10 +76,10 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
         safeAreaEdges={["top"]}
         contentContainerStyle={$screenContentContainer}
       >
-        <ListView<Episode>
+        <ListView<Movie>
           contentContainerStyle={$listContentContainer}
-          data={episodeStore.episodesForList.slice()}
-          extraData={episodeStore.favorites.length + episodeStore.episodes.length}
+          data={moviesStore.moviesForList.slice()}
+          extraData={moviesStore.favorites.length + moviesStore.movies.length}
           refreshing={refreshing}
           estimatedItemSize={177}
           onRefresh={manualRefresh}
@@ -90,16 +91,16 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
                 preset="generic"
                 style={$emptyState}
                 headingTx={
-                  episodeStore.favoritesOnly
+                  moviesStore.favoritesOnly
                     ? "demoPodcastListScreen.noFavoritesEmptyState.heading"
                     : undefined
                 }
                 contentTx={
-                  episodeStore.favoritesOnly
+                  moviesStore.favoritesOnly
                     ? "demoPodcastListScreen.noFavoritesEmptyState.content"
                     : undefined
                 }
-                button={episodeStore.favoritesOnly ? "" : undefined}
+                button={moviesStore.favoritesOnly ? "" : undefined}
                 buttonOnPress={manualRefresh}
                 imageStyle={$emptyStateImage}
                 ImageProps={{ resizeMode: "contain" }}
@@ -109,12 +110,12 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
           ListHeaderComponent={
             <View style={$heading}>
               <Text preset="heading" tx="demoPodcastListScreen.title" />
-              {(episodeStore.favoritesOnly || episodeStore.episodesForList.length > 0) && (
+              {(moviesStore.favoritesOnly || moviesStore.movies.length > 0) && (
                 <View style={$toggle}>
                   <Toggle
-                    value={episodeStore.favoritesOnly}
+                    value={moviesStore.favoritesOnly}
                     onValueChange={() =>
-                      episodeStore.setProp("favoritesOnly", !episodeStore.favoritesOnly)
+                      moviesStore.setProp("favoritesOnly", !moviesStore.favoritesOnly)
                     }
                     variant="switch"
                     labelTx="demoPodcastListScreen.onlyFavorites"
@@ -129,8 +130,8 @@ export const DemoPodcastListScreen: FC<DemoTabScreenProps<"DemoPodcastList">> = 
           renderItem={({ item }) => (
             <EpisodeCard
               episode={item}
-              isFavorite={episodeStore.hasFavorite(item)}
-              onPressFavorite={() => episodeStore.toggleFavorite(item)}
+              isFavorite={moviesStore.hasFavorite(item)}
+              onPressFavorite={() => moviesStore.toggleFavorite(item)}
             />
           )}
         />
@@ -144,7 +145,7 @@ const EpisodeCard = observer(function EpisodeCard({
   isFavorite,
   onPressFavorite,
 }: {
-  episode: Episode
+  episode: Movie
   onPressFavorite: () => void
   isFavorite: boolean
 }) {
@@ -215,7 +216,7 @@ const EpisodeCard = observer(function EpisodeCard({
   }
 
   const handlePressCard = () => {
-    console.log(episode.enclosure.link)
+    // console.log(episode.enclosure.link)
   }
 
   const ButtonLeftAccessory: ComponentType<ButtonAccessoryProps> = useMemo(
@@ -256,22 +257,15 @@ const EpisodeCard = observer(function EpisodeCard({
           <Text
             style={$metadataText}
             size="xxs"
-            accessibilityLabel={episode.datePublished.accessibilityLabel}
+            accessibilityLabel={episode.aka}
           >
-            {episode.datePublished.textLabel}
-          </Text>
-          <Text
-            style={$metadataText}
-            size="xxs"
-            accessibilityLabel={episode.duration.accessibilityLabel}
-          >
-            {episode.duration.textLabel}
+            {episode.aka}
           </Text>
         </View>
       }
-      content={`${episode.parsedTitleAndSubtitle.title} - ${episode.parsedTitleAndSubtitle.subtitle}`}
+      content={`${episode.year} - ${episode.title}`}
       {...accessibilityHintProps}
-      RightComponent={<Image source={imageUri} style={$itemThumbnail} />}
+      RightComponent={<Image source={{uri: episode?.imgPoster}} style={$itemThumbnail} />}
       FooterComponent={
         <Button
           onPress={handlePressFavorite}
@@ -286,7 +280,7 @@ const EpisodeCard = observer(function EpisodeCard({
         >
           <Text
             size="xxs"
-            accessibilityLabel={episode.duration.accessibilityLabel}
+            accessibilityLabel={episode.title}
             weight="medium"
             text={
               isFavorite
@@ -322,8 +316,10 @@ const $item: ViewStyle = {
 }
 
 const $itemThumbnail: ImageStyle = {
+  height: 100,
+  width: 100,
   marginTop: spacing.sm,
-  borderRadius: 50,
+  // borderRadius: 50,
   alignSelf: "flex-start",
 }
 
